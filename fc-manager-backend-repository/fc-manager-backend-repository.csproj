@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\fc-manager-backend-da\fc-manager-backend-da.csproj" />
+    <ProjectReference Include="..\fc-manager-backend-abstraction\fc-manager-backend-abstraction.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.0"/>
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>fc_manager_backend_repository</RootNamespace>
+  </PropertyGroup>
+
+</Project>
