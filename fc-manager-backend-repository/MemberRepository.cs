@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace fc_manager_backend_repository
 {
-    public class MemberRepository : IMember
+    public class MemberRepository : IMemberRepository
     {
         private FCMContext _context;
         public MemberRepository(FCMContext context)
@@ -32,6 +32,31 @@ namespace fc_manager_backend_repository
         public IEnumerable<MemberInfo> GetTeamMembers(int teamId)
         {
             throw new NotImplementedException();
+        }
+
+        public void Add(Member member)
+        {
+            _context.Members.Add(member);
+        }
+
+        public void Remove(Member member)
+        {
+            _context.Members.Remove(member);
+        }
+
+        public async Task<Member> GetMember(int id)
+        {
+            return await _context.Members.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<Member>> GetMembers()
+        {
+            var result = await _context.Members
+                .Include(m => m.Club)
+                .Include(m => m.Role)
+                .Include(m => m.TeamMembers)
+                .ToListAsync();
+            return result;
         }
     }
 }

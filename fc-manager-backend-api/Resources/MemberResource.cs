@@ -1,11 +1,13 @@
-using System.Collections.Generic;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using fc_manager_backend_da.Models;
+using System.Collections.Generic;
 
-namespace fc_manager_backend_da.Models
+
+namespace fc_manager_backend_api.Controllers.Resources
 {
-    public class Member : BaseEntity
+    public class MemberResource : BaseResource
     {
         [Required]
         [StringLength(100)]
@@ -15,17 +17,15 @@ namespace fc_manager_backend_da.Models
         [StringLength(20)]
         public string Phone { get; set; }
         public DateTime StartedOn { get; set; }
-        [ForeignKey("Role")]
         public int RoleId { get; set; }
         public virtual Code Role { get; set; }
-        [ForeignKey("Club")]
         public int ClubId { get; set; }
         public virtual Club Club { get; set; }
         public virtual List<TeamMember> TeamMembers { get; set; }
         public string ImageUrl { get; set; }
         public DateTime? DOB { get; set; }
 
-        public Member()
+        public MemberResource()
         {
             TeamMembers = new List<TeamMember>();
         }

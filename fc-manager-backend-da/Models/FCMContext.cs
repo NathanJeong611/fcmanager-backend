@@ -19,6 +19,7 @@ namespace fc_manager_backend_da.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Username=postgres;Password=postgres;Database=FCManager;");
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
