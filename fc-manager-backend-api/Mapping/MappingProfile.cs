@@ -1,7 +1,9 @@
+using System.Runtime.InteropServices;
 using AutoMapper;
 using fc_manager_backend_api.Controllers.Resources;
 using fc_manager_backend_da.Models;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace fc_manager_backend_api.Mapping
 {
@@ -10,8 +12,14 @@ namespace fc_manager_backend_api.Mapping
         public MappingProfile()
         {
             // Domain to API Resource
+            //CreateMap(typeof(IEnumerable<Member>), typeof(IEnumerable<MemberResource>));
+            //     .ForMember(mr => mr, opt => opt.MapFrom(m => m.Select(s => new { Id = s.Id})));
+            //     .ForMember(mr => mr.Id, opt => opt.MapFrom(m => m.))
+            // CreateMap<IEnumerable<Member>, IEnumerable<MemberResource>>()
+            //     .ForMember(mr => mr, opt => opt.MapFrom(m => m.Select(s => new { Id = s.Id})));
             CreateMap<Member, MemberResource>()
-                .ForMember(mr => mr.Id, opt => opt.MapFrom(m => m.Id));
+                .ForMember(mr => mr.Id, opt => opt.MapFrom(m => m.Id))
+                .ForMember(mr => mr.TeamName, opt => opt.MapFrom(m => m.TeamMembers.FirstOrDefault(f => f.MemberId == m.Id).Team.Name));
 
             // API Resource to Domain
             CreateMap<MemberResource, Member>()
@@ -22,7 +30,7 @@ namespace fc_manager_backend_api.Mapping
                 .ForMember(m => m.StartedOn, opt => opt.MapFrom(mr => mr.StartedOn))
                 .ForMember(m => m.RoleId, opt => opt.MapFrom(mr => mr.RoleId))
                 .ForMember(m => m.ClubId, opt => opt.MapFrom(mr => mr.ClubId))
-                .ForMember(m => m.Id, opt => opt.MapFrom(mr => mr.TeamMembers.FirstOrDefault(x => x.Id == mr.Id)))
+                //.ForMember(m => m.Id, opt => opt.MapFrom(mr => mr.TeamMembers.FirstOrDefault(x => x.Id == mr.Id)))
                 .ForMember(m => m.ImageUrl, opt => opt.MapFrom(mr => mr.ImageUrl))
                 .ForMember(m => m.DOB, opt => opt.MapFrom(mr => mr.DOB));
         }

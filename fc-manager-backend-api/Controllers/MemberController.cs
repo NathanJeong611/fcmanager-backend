@@ -56,7 +56,7 @@ namespace fc_manager_backend_api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateMember(int id, [FromBody] MemberResource memberResource)
+        public async Task<IActionResult> UpdateMember(int id, [FromBody] SaveMemberResource memberResource)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -66,7 +66,7 @@ namespace fc_manager_backend_api.Controllers
             if (member == null)
                 return NotFound();
 
-            _mapper.Map<MemberResource, Member>(memberResource, member);
+            _mapper.Map<SaveMemberResource, Member>(memberResource, member);
 
             await _unitOfWork.CompleteAsync();
 

@@ -55,6 +55,7 @@ namespace fc_manager_backend_repository
                 .Include(m => m.Club)
                 .Include(m => m.Role)
                 .Include(m => m.TeamMembers)
+                    .ThenInclude(x => x.Team)
                 .ToListAsync();
             return result;
         }
