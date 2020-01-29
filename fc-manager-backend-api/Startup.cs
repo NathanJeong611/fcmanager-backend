@@ -40,17 +40,19 @@ namespace fc_manager_backend_api
             options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
         );
 
-            services.AddCors(options =>
+        services.AddCors(options =>
         {
             options.AddPolicy(CORSOriginName,
             builder =>
             {
-                builder.WithOrigins("http://localhost:3000");
+                builder.WithOrigins("http://localhost:3000")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
             });
         });
 
 
-            services.AddControllers();
+        services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
