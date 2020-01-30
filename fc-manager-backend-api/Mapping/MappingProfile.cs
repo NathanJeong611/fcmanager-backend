@@ -28,8 +28,6 @@ namespace fc_manager_backend_api.Mapping
                 .ForMember(m => m.Email, opt => opt.MapFrom(mr => mr.Email))
                 .ForMember(m => m.Phone, opt => opt.MapFrom(mr => mr.Phone))
                 .ForMember(m => m.StartedOn, opt => opt.MapFrom(mr => mr.StartedOn))
-                .ForMember(m => m.RoleId, opt => opt.MapFrom(mr => mr.RoleId))
-                .ForMember(m => m.ClubId, opt => opt.MapFrom(mr => mr.ClubId))
                 //.ForMember(m => m.Id, opt => opt.MapFrom(mr => mr.TeamMembers.FirstOrDefault(x => x.Id == mr.Id)))
                 .ForMember(m => m.ImageUrl, opt => opt.MapFrom(mr => mr.ImageUrl))
                 .ForMember(m => m.DOB, opt => opt.MapFrom(mr => mr.DOB));

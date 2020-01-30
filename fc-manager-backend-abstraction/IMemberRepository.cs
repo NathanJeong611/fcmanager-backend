@@ -8,9 +8,6 @@ namespace fc_manager_backend_abstraction
 {
     public interface IMemberRepository
     {
-        IEnumerable<MemberInfo> GetClubMembers(int clubId);
-        IEnumerable<MemberInfo> GetTeamMembers(int teamId);
-        IEnumerable<MemberInfo> GetLeagueMembers(int leagueId);
         Task<Member> GetMember(int id);
         Task<IEnumerable<Member>> GetMembers();
         void Add(Member member);

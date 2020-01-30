@@ -18,22 +18,6 @@ namespace fc_manager_backend_repository
             _context = context;
         }
 
-        public  IEnumerable<MemberInfo> GetClubMembers(int clubId)
-        {
-            return _context.Members.Where(m=>m.ClubId == clubId && m.DeletedAt == null)
-            .Select(m=> new MemberInfo{ Id = m.Id,   }).ToList();
-        }
-
-        public IEnumerable<MemberInfo> GetLeagueMembers(int leagueId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<MemberInfo> GetTeamMembers(int teamId)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Add(Member member)
         {
             _context.Members.Add(member);
@@ -52,8 +36,6 @@ namespace fc_manager_backend_repository
         public async Task<IEnumerable<Member>> GetMembers()
         {
             var result = await _context.Members
-                .Include(m => m.Club)
-                .Include(m => m.Role)
                 .Include(m => m.TeamMembers)
                     .ThenInclude(x => x.Team)
                 .ToListAsync();
