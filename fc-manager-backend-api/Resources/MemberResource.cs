@@ -21,6 +21,7 @@ namespace fc_manager_backend_api.Controllers.Resources
         public virtual Code Role { get; set; }
         public int ClubId { get; set; }
         public virtual Club Club { get; set; }
+        public int TeamId { get; set; }
         public string TeamName { get; set; }
         public string ImageUrl { get; set; }
         public DateTime? DOB { get; set; }

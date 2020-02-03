@@ -14,14 +14,14 @@ namespace fc_manager_backend_api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TeamController : ControllerBase
+    public class CodeController : ControllerBase
     {
         private readonly ILogger<MatchController> _logger;
-        private ITeamRepository _repository;
+        private ICodeRepository _repository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
-        public TeamController(ILogger<MatchController> logger, ITeamRepository repository, IMapper mapper, IUnitOfWork unitOfWork)
+        public CodeController(ILogger<MatchController> logger, ICodeRepository repository, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -31,11 +31,11 @@ namespace fc_manager_backend_api.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<TeamResource>> GetTeamResources()
+        public async Task<IEnumerable<CodeResource>> GetCodeResources()
         {
-            var teams = await _repository.GetTeams();
+            var codes = await _repository.GetCodes();
 
-            var result = _mapper.Map<IEnumerable<Team>, IEnumerable<TeamResource>>(teams);
+            var result = _mapper.Map<IEnumerable<Code>, IEnumerable<CodeResource>>(codes);
             return result;
         }
     }

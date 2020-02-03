@@ -84,7 +84,8 @@ namespace fc_manager_backend_api.Controllers
             if (member == null)
                 return NotFound();
 
-            _repository.Remove(member);
+            member.DeletedAt = DateTime.Now;
+            //_repository.Remove(member);
             await _unitOfWork.CompleteAsync();
 
             return Ok(id);

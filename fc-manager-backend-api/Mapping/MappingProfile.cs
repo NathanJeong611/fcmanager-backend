@@ -19,18 +19,24 @@ namespace fc_manager_backend_api.Mapping
             //     .ForMember(mr => mr, opt => opt.MapFrom(m => m.Select(s => new { Id = s.Id})));
             CreateMap<Member, MemberResource>()
                 .ForMember(mr => mr.Id, opt => opt.MapFrom(m => m.Id))
-                .ForMember(mr => mr.TeamName, opt => opt.MapFrom(m => m.TeamMembers.FirstOrDefault(f => f.MemberId == m.Id).Team.Name));
+                //.ForMember(mr => mr.TeamName, opt => opt.MapFrom(m => m.TeamMembers.FirstOrDefault(f => f.MemberId == m.Id).Team));
+                .ForMember(mr => mr.TeamName, opt => opt.MapFrom(m => m.TeamMembers.FirstOrDefault(f => f.MemberId == m.Id).Team.Name))
+                .ForMember(mr => mr.TeamId, opt => opt.MapFrom(m => m.TeamMembers.FirstOrDefault(f => f.MemberId == m.Id).Team.Id));
+
+            CreateMap<Code, CodeResource>();
+            CreateMap<Team, TeamResource>();
 
             // API Resource to Domain
-            CreateMap<MemberResource, Member>()
-                .ForMember(m => m.Id, opt => opt.Ignore())
-                .ForMember(m => m.Name, opt => opt.MapFrom(mr => mr.Name)) //opt: operation object
-                .ForMember(m => m.Email, opt => opt.MapFrom(mr => mr.Email))
-                .ForMember(m => m.Phone, opt => opt.MapFrom(mr => mr.Phone))
-                .ForMember(m => m.StartedOn, opt => opt.MapFrom(mr => mr.StartedOn))
-                //.ForMember(m => m.Id, opt => opt.MapFrom(mr => mr.TeamMembers.FirstOrDefault(x => x.Id == mr.Id)))
-                .ForMember(m => m.ImageUrl, opt => opt.MapFrom(mr => mr.ImageUrl))
-                .ForMember(m => m.DOB, opt => opt.MapFrom(mr => mr.DOB));
+            CreateMap<MemberResource, Member>();
+            CreateMap<SaveMemberResource, Member>()
+                .ForMember(m => m.Id, opt => opt.Ignore());
+                // .ForMember(m => m.Name, opt => opt.MapFrom(mr => mr.Name)) //opt: operation object
+                // .ForMember(m => m.Email, opt => opt.MapFrom(mr => mr.Email))
+                // .ForMember(m => m.Phone, opt => opt.MapFrom(mr => mr.Phone))
+                // .ForMember(m => m.StartedOn, opt => opt.MapFrom(mr => mr.StartedOn))
+                // //.ForMember(m => m.Id, opt => opt.MapFrom(mr => mr.TeamMembers.FirstOrDefault(x => x.Id == mr.Id)))
+                // .ForMember(m => m.ImageUrl, opt => opt.MapFrom(mr => mr.ImageUrl))
+                // .ForMember(m => m.DOB, opt => opt.MapFrom(mr => mr.DOB));
         }
     }
 }

@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace fc_manager_backend_abstraction
 {
-    public interface ITeamRepository
+    public interface ICodeRepository
     {
-        Task<IEnumerable<Team>> GetTeams();
+        Task<IEnumerable<Code>> GetCodes();
     }
+
+
 }

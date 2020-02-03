@@ -10,16 +10,16 @@ using System.Threading.Tasks;
 
 namespace fc_manager_backend_repository
 {
-    public class TeamRepository : ITeamRepository
+    public class CodeRepository : ICodeRepository
     {
         private FCMContext _context;
-        public TeamRepository(FCMContext context)
+        public CodeRepository(FCMContext context)
         {
             _context = context;
         }
-        public async Task<IEnumerable<Team>> GetTeams()
+        public async Task<IEnumerable<Code>> GetCodes()
         {
-            var result = await _context.Teams
+            var result = await _context.Codes
                 .ToListAsync();
             return result;
         }
