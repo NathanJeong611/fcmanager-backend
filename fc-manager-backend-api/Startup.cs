@@ -36,6 +36,7 @@ namespace fc_manager_backend_api
             services.AddScoped<IMemberRepository, MemberRepository>();
             services.AddScoped<ICodeRepository, CodeRepository>();
             services.AddScoped<ITeamRepository, TeamRepository>();
+            services.AddScoped<IMatchRepository, MatchRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddControllers().AddNewtonsoftJson(

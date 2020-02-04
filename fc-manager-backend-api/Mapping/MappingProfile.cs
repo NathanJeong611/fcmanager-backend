@@ -25,6 +25,9 @@ namespace fc_manager_backend_api.Mapping
 
             CreateMap<Code, CodeResource>();
             CreateMap<Team, TeamResource>();
+            CreateMap<Match, MatchResource>()
+                .ForMember(mr => mr.HomeTeamName, opt => opt.MapFrom(m => m.HomeTeam.Name))
+                .ForMember(mr => mr.AwayTeamName, opt => opt.MapFrom(m => m.AwayTeam.Name));
 
             // API Resource to Domain
             CreateMap<MemberResource, Member>();
@@ -37,6 +40,9 @@ namespace fc_manager_backend_api.Mapping
                 // //.ForMember(m => m.Id, opt => opt.MapFrom(mr => mr.TeamMembers.FirstOrDefault(x => x.Id == mr.Id)))
                 // .ForMember(m => m.ImageUrl, opt => opt.MapFrom(mr => mr.ImageUrl))
                 // .ForMember(m => m.DOB, opt => opt.MapFrom(mr => mr.DOB));
+            CreateMap<MatchResource, Match>();
+            CreateMap<SaveMatchResource, Match>()
+                .ForMember(m => m.Id, opt => opt.Ignore());
         }
     }
 }

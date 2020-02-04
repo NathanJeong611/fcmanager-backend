@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace fc_manager_backend_api.Controllers.Resources
 {
-    public class SaveMemberResource : BaseResource
+    public class SaveMatchResource : BaseResource
     {
         [Required]
         [StringLength(100)]
@@ -26,7 +26,7 @@ namespace fc_manager_backend_api.Controllers.Resources
         public string ImageUrl { get; set; }
         public DateTime? DOB { get; set; }
 
-        public SaveMemberResource()
+        public SaveMatchResource()
         {
             TeamMembers = new List<TeamMember>();
         }

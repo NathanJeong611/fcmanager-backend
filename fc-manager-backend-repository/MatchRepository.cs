@@ -1,9 +1,13 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Collections;
+using System.Security.Cryptography.X509Certificates;
 using fc_manager_backend_da.Models;
 using fc_manager_backend_abstraction;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+
 
 namespace fc_manager_backend_repository
 {
@@ -15,31 +19,28 @@ namespace fc_manager_backend_repository
             _context = context;
         }
 
-        public List<ScheduleInfo> GetMatches(int clubId, DateTime? beginingAt)
+        public void Add(Match match)
         {
-            var query = _context.Matches.Where(m => m.ClubId == clubId && m.DeletedAt == null);
-            if (beginingAt != null)
-            {
-                query = query.Where(q => beginingAt <= q.ScheduledAt);
-            }
+            _context.Matches.Add(match);
+        }
 
-            return query.AsEnumerable().GroupBy(m => m.ScheduledAt.Date)
-                        .Select(g => new ScheduleInfo
-                        {
-                            ScheduledOn = g.Key,
-                            matches = g.Select(m => new MatchInfo
-                            {
-                                Id = m.Id,
-                                HomeTeamName = m.HomeTeam?.Name,
-                                HomeTeamLogoUrl = m.HomeTeam?.LogoUrl,
-                                HomeScore = m.HomeScore,
-                                AwayTeamName = m.AwayTeam?.Name,
-                                AwayTeamLogoUrl = m.AwayTeam?.LogoUrl,
-                                AwayScore = m.AwayScore,
-                                Location = m.Location,
-                                ScheduledAt = m.ScheduledAt
-                            }).ToList()
-                        }).ToList();
+        public void Remove(Match match)
+        {
+            _context.Matches.Remove(match);
+        }
+
+        public async Task<Match> GetMatch(int id)
+        {
+            return await _context.Matches.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<Match>> GetScheduledMatches()
+        {
+            var result = await _context.Matches
+                .Include(m => m.HomeTeam)
+                .Include(m => m.AwayTeam)
+                .ToListAsync();
+            return result;
         }
     }
 }
