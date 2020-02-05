@@ -20,8 +20,6 @@ namespace fc_manager_backend_api.Controllers.Resources
         public DateTime StartedOn { get; set; }
         public int RoleId { get; set; }
         public virtual Code Role { get; set; }
-        public int ClubId { get; set; }
-        public virtual Club Club { get; set; }
         public virtual List<TeamMember> TeamMembers { get; set; }
         public string ImageUrl { get; set; }
         public DateTime? DOB { get; set; }

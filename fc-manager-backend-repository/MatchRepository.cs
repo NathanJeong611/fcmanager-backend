@@ -34,13 +34,22 @@ namespace fc_manager_backend_repository
             return await _context.Matches.FindAsync(id);
         }
 
-        public async Task<List<Match>> GetMatches()
+        public async Task<List<QueryResult<Match>>> GetScheduledMatches()
         {
-            var result = await _context.Matches
-                .Include(m => m.HomeTeam)
-                .Include(m => m.AwayTeam)
-                .ToListAsync();
+            var result = new List<QueryResult<Match>>();
 
+            var query = _context.Matches
+                            .Include(m => m.HomeTeam)
+                            .Include(m => m.AwayTeam)
+                            .AsEnumerable()
+                            .GroupBy(m => m.ScheduledAt.Date)
+                            .Select(g => new QueryResult<Match>
+                            {
+                                ScheduledOn = g.Key,
+                                Matches = g
+                            });
+                            
+            result = await Task.FromResult(query.ToList());
             return result;
         }
     }

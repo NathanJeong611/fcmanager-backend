@@ -97,23 +97,13 @@ namespace fc_manager_backend_api.Controllers
             return Ok(matchResource);
         }
 
-        // [HttpGet]
-        // public async Task<List<IGrouping<DateTime, MatchResource>>> GetMatchResources()
-        // {
-        //     var matches = await _repository.GetScheduledMatches();
+        [HttpGet]
+        public async Task<List<QueryResultResource<MatchResource>>> GetMatchResources()
+        {
+            var matches = await _repository.GetScheduledMatches();
 
-        //     var result = _mapper.Map<List<IGrouping<DateTime, MatchResource>>>(matches);
-        //     return result;
-        // }
-
-        // [HttpGet]
-        // public async Task<List<ScheduledMatchResource>> GetMatchResources()
-        // {
-        //     var matches = await _repository.GetMatches();
-
-        //     var result = _mapper.Map<List<Match>, List<ScheduledMatchResource>>(matches);
-
-        //     return result;
-        // }
+            var result = _mapper.Map<List<QueryResult<Match>>, List<QueryResultResource<MatchResource>>>(matches);
+            return result;
+        }
     }
 }
