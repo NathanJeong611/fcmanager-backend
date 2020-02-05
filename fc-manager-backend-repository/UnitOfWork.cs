@@ -13,12 +13,12 @@ namespace fc_manager_backend_abstraction
 
         public UnitOfWork(FCMContext context)
         {
-        this.context = context;
+            this.context = context;
         }
 
         public async Task CompleteAsync()
         {
-        await context.SaveChangesAsync();
+            await context.SaveChangesAsync();
         }
     }
 }

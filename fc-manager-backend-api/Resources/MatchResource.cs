@@ -7,6 +7,10 @@ using System.Collections.Generic;
 
 namespace fc_manager_backend_api.Controllers.Resources
 {
+    // public class List<MatchResource>
+    // {
+    //     public MatchResource match {get;set;}
+    // }
     public class MatchResource : BaseResource
     {
         public string HomeTeamName { get; set; }

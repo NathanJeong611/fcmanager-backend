@@ -3,7 +3,6 @@ using AutoMapper;
 using fc_manager_backend_api.Controllers.Resources;
 using fc_manager_backend_da.Models;
 using System.Linq;
-using System.Collections.Generic;
 
 namespace fc_manager_backend_api.Mapping
 {
@@ -25,9 +24,22 @@ namespace fc_manager_backend_api.Mapping
 
             CreateMap<Code, CodeResource>();
             CreateMap<Team, TeamResource>();
-            CreateMap<Match, MatchResource>()
-                .ForMember(mr => mr.HomeTeamName, opt => opt.MapFrom(m => m.HomeTeam.Name))
-                .ForMember(mr => mr.AwayTeamName, opt => opt.MapFrom(m => m.AwayTeam.Name));
+            // CreateMap<Match, MatchResource>()
+            //     .ForMember(mr => mr.HomeTeamName, opt => opt.MapFrom(m => m.HomeTeam.Name))
+            //     .ForMember(mr => mr.AwayTeamName, opt => opt.MapFrom(m => m.AwayTeam.Name));
+
+            // CreateMap<Match, ScheduledMatchResource>()
+            //     .ForMember(smr => smr.ScheduledAt, opt => opt.MapFrom(m => m.ScheduledAt))
+            //     .ForMember(smr => smr.Matches, opt => opt.MapFrom(m => new List<MatchResource>
+            //     { 
+            //         HomeTeamName = m.HomeTeam.Name,
+            //         HomeTeamId = m.HomeTeamId,
+            //         HomeScore = m.HomeScore,
+            //         AwayTeamName = m.AwayTeam.Name,
+            //         AwayTeamId = m.AwayTeamId,
+            //         AwayScore = m.AwayScore,
+            //         Location = m.Location,  
+            //     }));
 
             // API Resource to Domain
             CreateMap<MemberResource, Member>();
