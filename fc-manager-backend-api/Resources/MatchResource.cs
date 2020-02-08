@@ -26,5 +26,13 @@ namespace fc_manager_backend_api.Controllers.Resources
         public int LeagueId {get;set;}
         public virtual Club Club {get;set;}
         public int ClubId {get;set;}
+
+        
+        public IList<MatchRecordResource> MatchRecords { get; set; }
+
+        public MatchResource()
+        {
+            MatchRecords = new List<MatchRecordResource>();
+        }
     }
 }

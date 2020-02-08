@@ -13,10 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fc-manager-backend-reposito
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{2F5F117A-A0EE-4DCB-9AEC-23787637712C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fc-manager-backend-repository-unittests", "test\fc-manager-backend-repository-unittests\fc-manager-backend-repository-unittests.csproj", "{D6E86BE7-DA3C-4C31-A9C8-0162A2521198}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fc-manager-testcommon", "test\fc-manager-testcommon\fc-manager-testcommon.csproj", "{C52EC2CC-C461-4234-8A3F-D4E9475B4347}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -90,20 +86,7 @@ Global
 		{D6E86BE7-DA3C-4C31-A9C8-0162A2521198}.Release|x64.Build.0 = Release|Any CPU
 		{D6E86BE7-DA3C-4C31-A9C8-0162A2521198}.Release|x86.ActiveCfg = Release|Any CPU
 		{D6E86BE7-DA3C-4C31-A9C8-0162A2521198}.Release|x86.Build.0 = Release|Any CPU
-		{C52EC2CC-C461-4234-8A3F-D4E9475B4347}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C52EC2CC-C461-4234-8A3F-D4E9475B4347}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C52EC2CC-C461-4234-8A3F-D4E9475B4347}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{C52EC2CC-C461-4234-8A3F-D4E9475B4347}.Debug|x64.Build.0 = Debug|Any CPU
-		{C52EC2CC-C461-4234-8A3F-D4E9475B4347}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{C52EC2CC-C461-4234-8A3F-D4E9475B4347}.Debug|x86.Build.0 = Debug|Any CPU
-		{C52EC2CC-C461-4234-8A3F-D4E9475B4347}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C52EC2CC-C461-4234-8A3F-D4E9475B4347}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C52EC2CC-C461-4234-8A3F-D4E9475B4347}.Release|x64.ActiveCfg = Release|Any CPU
-		{C52EC2CC-C461-4234-8A3F-D4E9475B4347}.Release|x64.Build.0 = Release|Any CPU
-		{C52EC2CC-C461-4234-8A3F-D4E9475B4347}.Release|x86.ActiveCfg = Release|Any CPU
-		{C52EC2CC-C461-4234-8A3F-D4E9475B4347}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{C52EC2CC-C461-4234-8A3F-D4E9475B4347} = {2F5F117A-A0EE-4DCB-9AEC-23787637712C}
 	EndGlobalSection
 EndGlobal

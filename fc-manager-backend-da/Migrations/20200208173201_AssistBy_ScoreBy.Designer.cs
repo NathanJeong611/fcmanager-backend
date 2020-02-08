@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using fc_manager_backend_da.Models;
@@ -9,9 +10,10 @@ using fc_manager_backend_da.Models;
 namespace fc_manager_backend_da.Migrations
 {
     [DbContext(typeof(FCMContext))]
-    partial class FCMContextModelSnapshot : ModelSnapshot
+    [Migration("20200208173201_AssistBy_ScoreBy")]
+    partial class AssistBy_ScoreBy
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -172,7 +174,7 @@ namespace fc_manager_backend_da.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int?>("AssistBy")
+                    b.Property<int>("AssistBy")
                         .HasColumnType("integer");
 
                     b.Property<int>("CodeId")
@@ -187,7 +189,7 @@ namespace fc_manager_backend_da.Migrations
                     b.Property<int>("MatchId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("ScoreBy")
+                    b.Property<int>("ScoreBy")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -365,7 +367,9 @@ namespace fc_manager_backend_da.Migrations
                 {
                     b.HasOne("fc_manager_backend_da.Models.Member", "AssistMember")
                         .WithMany()
-                        .HasForeignKey("AssistBy");
+                        .HasForeignKey("AssistBy")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("fc_manager_backend_da.Models.Code", "Type")
                         .WithMany()
@@ -381,7 +385,9 @@ namespace fc_manager_backend_da.Migrations
 
                     b.HasOne("fc_manager_backend_da.Models.Member", "ScoreMember")
                         .WithMany()
-                        .HasForeignKey("ScoreBy");
+                        .HasForeignKey("ScoreBy")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("fc_manager_backend_da.Models.Member", b =>

@@ -37,7 +37,7 @@ namespace fc_manager_backend_repository
         {
             var result = await _context.Members
                 .Include(m => m.TeamMembers)
-                    .ThenInclude(x => x.Team)
+                    .ThenInclude(t => t.Team)
                 .ToListAsync();
             return result;
         }

@@ -41,12 +41,20 @@ namespace fc_manager_backend_repository
             var query = _context.Matches
                             .Include(m => m.HomeTeam)
                             .Include(m => m.AwayTeam)
+                            .Include(m => m.MatchRecords)
+                                .ThenInclude(mr => mr.ScoreMember)
+                                    .ThenInclude(mrm => mrm.TeamMembers)
+                            .Include(m => m.MatchRecords)
+                                .ThenInclude(mr => mr.AssistMember)
+                                    .ThenInclude(mrm => mrm.TeamMembers)
+                            .Include(m => m.MatchRecords)
+                                .ThenInclude(mr => mr.Type)
                             .AsEnumerable()
                             .GroupBy(m => m.ScheduledAt.Date)
                             .Select(g => new QueryResult<Match>
                             {
                                 ScheduledOn = g.Key,
-                                Matches = g
+                                Matches = g,
                             });
                             
             result = await Task.FromResult(query.ToList());

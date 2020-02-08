@@ -4,6 +4,7 @@ using fc_manager_backend_api.Controllers.Resources;
 using fc_manager_backend_da.Models;
 using fc_manager_backend_abstraction;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace fc_manager_backend_api.Mapping
 {
@@ -19,7 +20,6 @@ namespace fc_manager_backend_api.Mapping
             //     .ForMember(mr => mr, opt => opt.MapFrom(m => m.Select(s => new { Id = s.Id})));
             CreateMap<Member, MemberResource>()
                 .ForMember(mr => mr.Id, opt => opt.MapFrom(m => m.Id))
-                //.ForMember(mr => mr.TeamName, opt => opt.MapFrom(m => m.TeamMembers.FirstOrDefault(f => f.MemberId == m.Id).Team));
                 .ForMember(mr => mr.TeamName, opt => opt.MapFrom(m => m.TeamMembers.FirstOrDefault(f => f.MemberId == m.Id).Team.Name))
                 .ForMember(mr => mr.TeamId, opt => opt.MapFrom(m => m.TeamMembers.FirstOrDefault(f => f.MemberId == m.Id).Team.Id));
 
@@ -29,7 +29,19 @@ namespace fc_manager_backend_api.Mapping
             CreateMap(typeof(QueryResult<>), typeof(QueryResultResource<>));
             CreateMap<Match, MatchResource>()
                 .ForMember(mr => mr.HomeTeamName, opt => opt.MapFrom(m => m.HomeTeam.Name))
-                .ForMember(mr => mr.AwayTeamName, opt => opt.MapFrom(m => m.AwayTeam.Name));
+                .ForMember(mr => mr.AwayTeamName, opt => opt.MapFrom(m => m.AwayTeam.Name))
+                .ForMember(mr => mr.MatchRecords, opt => opt.MapFrom(m => m.MatchRecords.Select(mrs => new MatchRecordResource 
+                { 
+                    Id = mrs.Id,
+                    ScoreMemberId = mrs.ScoreMember.Id, 
+                    ScoreMemberName = mrs.ScoreMember.Name,
+                    ScoreTeamId = mrs.ScoreMember.TeamMembers.Where(f => f.MemberId == mrs.ScoreMember.Id).Select(z => z.TeamId).FirstOrDefault(),
+                    AssistMemberId = mrs.AssistMember.Id, 
+                    AssistMemberName = mrs.AssistMember.Name,
+                    AssistTeamId = mrs.ScoreMember.TeamMembers.Where(f => f.MemberId == mrs.ScoreMember.Id).Select(z => z.TeamId).FirstOrDefault(),
+                    CodeId = mrs.CodeId, 
+                    CodeName = mrs.Type.Name
+                })));
                 
             // API Resource to Domain
             CreateMap<MemberResource, Member>();
