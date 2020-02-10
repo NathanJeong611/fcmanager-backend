@@ -10,7 +10,7 @@ namespace fc_manager_backend_abstraction
     public interface IMatchRecordRepository
     {
         Task<MatchRecord> GetMatchRecord(int id);
-        Task<IEnumerable<MatchRecord>> GetMatchRecords();
+        Task<IEnumerable<MatchRecord>> GetMatchRecords(int matchId);
         Task<List<MatchRecord>> GetMatchRecords(List<int> matchRecordIds);
         void Add(MatchRecord matchRecord);
         void Remove(MatchRecord matchRecord);
