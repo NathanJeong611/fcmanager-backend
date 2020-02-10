@@ -10,23 +10,25 @@ namespace fc_manager_backend_api.Controllers.Resources
 {
     public class SaveMatchResource : BaseResource
     {
-        [Required]
+        public string HomeTeamName { get; set; }
+        public int HomeTeamId{get; set;}
+        public int HomeScore { get; set; }
+        public string AwayTeamName { get; set; }
+        public int AwayTeamId{get; set;}
+        public int AwayScore { get; set; }
+        public DateTime ScheduledAt { get; set; }
         [StringLength(100)]
-        public string Name { get; set; }
-        [StringLength(255)]
-        public string Email { get; set; }
-        [StringLength(20)]
-        public string Phone { get; set; }
-        public DateTime StartedOn { get; set; }
-        public int RoleId { get; set; }
-        public virtual Code Role { get; set; }
-        public virtual List<TeamMember> TeamMembers { get; set; }
-        public string ImageUrl { get; set; }
-        public DateTime? DOB { get; set; }
+        public string Location {get;set;}
+        public virtual League League {get;set;}
+        public int LeagueId {get;set;}
+        public virtual Club Club {get;set;}
+        public int ClubId {get;set;}
+
+        public IList<MatchRecordResource> MatchRecords { get; set; }
 
         public SaveMatchResource()
         {
-            TeamMembers = new List<TeamMember>();
+            MatchRecords = new List<MatchRecordResource>();
         }
 
     }
