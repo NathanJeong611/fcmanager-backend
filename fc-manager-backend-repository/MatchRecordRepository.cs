@@ -34,9 +34,10 @@ namespace fc_manager_backend_repository
             return await _context.MatchRecords.FindAsync(id);
         }
 
-        public async Task<IEnumerable<MatchRecord>> GetMatchRecords()
+        public async Task<IEnumerable<MatchRecord>> GetMatchRecords(int matchId)
         {
             return await _context.MatchRecords
+                            .Where(mr => mr.MatchId == matchId)
                             .Include(mr => mr.ScoreMember)
                                 .ThenInclude(mrm => mrm.TeamMembers)
                             .Include(mr => mr.AssistMember)

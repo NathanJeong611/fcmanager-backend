@@ -6,9 +6,11 @@ namespace fc_manager_backend_da.Models
 {
     public class MatchRecord : BaseEntity
     {
-        [ForeignKey("ScoreBy")]
+        public int? ScoreMemberId { get; set; }
+        [ForeignKey("ScoreMemberId")]
         public virtual Member ScoreMember { get; set; }
-        [ForeignKey("AssistBy")]
+        public int? AssistMemberId { get; set; }
+        [ForeignKey("AssistMemberId")]
         public virtual Member AssistMember { get; set; }
         [ForeignKey("Code")]
         public int CodeId { get; set; }

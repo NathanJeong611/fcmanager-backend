@@ -45,8 +45,9 @@ namespace fc_manager_backend_api.Controllers
                 var matchRecord = _mapper.Map<SaveMatchRecordResource, MatchRecord>(mr);
                 _repository.Add(matchRecord);
 
-                matchRecordIds.Add(matchRecord.Id);
                 await _unitOfWork.CompleteAsync();
+
+                matchRecordIds.Add(matchRecord.Id);
             }
             else
             {
@@ -61,9 +62,7 @@ namespace fc_manager_backend_api.Controllers
                 await _unitOfWork.CompleteAsync();
             }
         }
-
-        
-        
+    
         var matchRecords = await _repository.GetMatchRecords(matchRecordIds);
 
         var result = _mapper.Map<List<MatchRecord>, List<MatchRecordResource>>(matchRecords);
@@ -126,23 +125,23 @@ namespace fc_manager_backend_api.Controllers
             return Ok(id);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetMatchRecord(int id)
+        // [HttpGet("{id}")]
+        // public async Task<IActionResult> GetMatchRecord(int id)
+        // {
+        //     var record = await _repository.GetMatchRecord(id);
+
+        //     if (record == null)
+        //         return NotFound();
+
+        //     var recordResource = _mapper.Map<MatchRecord, MatchRecordResource>(record);
+
+        //     return Ok(recordResource);
+        // }
+
+        [HttpGet("{matchId}")]
+        public async Task<IEnumerable<MatchRecordResource>> GetMatchRecordResources(int matchId)
         {
-            var record = await _repository.GetMatchRecord(id);
-
-            if (record == null)
-                return NotFound();
-
-            var recordResource = _mapper.Map<MatchRecord, MatchRecordResource>(record);
-
-            return Ok(recordResource);
-        }
-
-        [HttpGet]
-        public async Task<IEnumerable<MatchRecordResource>> GetMatchRecordResources()
-        {
-            var matchRecords = await _repository.GetMatchRecords();
+            var matchRecords = await _repository.GetMatchRecords(matchId);
 
             var result = _mapper.Map<IEnumerable<MatchRecord>, IEnumerable<MatchRecordResource>>(matchRecords);
             return result;
