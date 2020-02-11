@@ -45,8 +45,9 @@ namespace fc_manager_backend_api.Controllers
                 var matchRecord = _mapper.Map<SaveMatchRecordResource, MatchRecord>(mr);
                 _repository.Add(matchRecord);
 
-                matchRecordIds.Add(matchRecord.Id);
                 await _unitOfWork.CompleteAsync();
+
+                matchRecordIds.Add(matchRecord.Id);
             }
             else
             {
@@ -61,9 +62,7 @@ namespace fc_manager_backend_api.Controllers
                 await _unitOfWork.CompleteAsync();
             }
         }
-
-        
-        
+    
         var matchRecords = await _repository.GetMatchRecords(matchRecordIds);
 
         var result = _mapper.Map<List<MatchRecord>, List<MatchRecordResource>>(matchRecords);

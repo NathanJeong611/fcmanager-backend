@@ -13,10 +13,10 @@ namespace fc_manager_backend_api.Controllers.Resources
     // }
     public class MatchRecordResource : BaseResource
     {
-        public int ScoreMemberId { get; set; }
+        public int? ScoreMemberId { get; set; }
         public string ScoreMemberName { get; set; }
         public int ScoreTeamId { get; set; }
-        public int AssistMemberId { get; set; }
+        public int? AssistMemberId { get; set; }
         public string AssistMemberName { get; set; }
         public int AssistTeamId { get; set; }
         public int CodeId { get; set; }
