@@ -49,15 +49,15 @@ namespace fc_manager_backend_api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateMatch(int id, [FromBody] SaveMatchResource matchResource)
+        public async Task<MatchResource> UpdateMatch(int id, [FromBody] SaveMatchResource matchResource)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            // if (!ModelState.IsValid)
+            //     return BadRequest(ModelState);
 
             var match = await _repository.GetMatch(id);
 
-            if (match == null)
-                return NotFound();
+            // if (match == null)
+            //     return NotFound();
 
             _mapper.Map<SaveMatchResource, Match>(matchResource, match);
 
@@ -66,7 +66,7 @@ namespace fc_manager_backend_api.Controllers
             match = await _repository.GetMatch(match.Id);
             var result = _mapper.Map<Match, MatchResource>(match);
 
-            return Ok(result);
+            return result;
         }
 
         [HttpDelete("{id}")]

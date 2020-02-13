@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.InteropServices;
 using AutoMapper;
 using fc_manager_backend_api.Controllers.Resources;
@@ -43,7 +44,12 @@ namespace fc_manager_backend_api.Mapping
                 .ForMember(m => m.Id, opt => opt.Ignore());
             CreateMap<MatchRecordResource, MatchRecord>();
             CreateMap<SaveMatchRecordResource, MatchRecord>()
-                .ForMember(m => m.Id, opt => opt.Ignore());
+                .ForMember(m => m.Id, opt => opt.Ignore())
+                .AfterMap((mr, m) => {
+                    // Delete unselected MatchRecords
+                    if ((mr.ScoreMemberId == 0 || mr.ScoreMemberId == null) && (mr.AssistMemberId == 0 || mr.AssistMemberId == null))
+                        m.DeletedAt = DateTime.Now;
+                });
         }
     }
 }
