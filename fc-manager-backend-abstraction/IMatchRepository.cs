@@ -10,7 +10,8 @@ namespace fc_manager_backend_abstraction
     public interface IMatchRepository
     {
         Task<Match> GetMatch(int id);
-        Task<List<QueryResult<Match>>> GetScheduledMatches();
+        Task<IEnumerable<Match>> GetMatches();
+        //Task<List<QueryResult<Match>>> GetScheduledMatches();
         void Add(Match match);
         void Remove(Match match);
     }

@@ -16,10 +16,13 @@ namespace fc_manager_backend_api.Controllers.Resources
         public string HomeTeamName { get; set; }
         public int HomeTeamId{get; set;}
         public int HomeScore { get; set; }
+        public string HomeTeamLogoUrl { get; set;}
         public string AwayTeamName { get; set; }
         public int AwayTeamId{get; set;}
         public int AwayScore { get; set; }
+        public string AwayTeamLogoUrl { get; set;}
         public DateTime ScheduledAt { get; set; }
+        public DateTime ScheduledOn { get; set; }
         [StringLength(100)]
         public string Location {get;set;}
         public virtual League League {get;set;}

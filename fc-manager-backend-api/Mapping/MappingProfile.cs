@@ -30,7 +30,10 @@ namespace fc_manager_backend_api.Mapping
             CreateMap(typeof(QueryResult<>), typeof(QueryResultResource<>));
             CreateMap<Match, MatchResource>()
                 .ForMember(mr => mr.HomeTeamName, opt => opt.MapFrom(m => m.HomeTeam.Name))
-                .ForMember(mr => mr.AwayTeamName, opt => opt.MapFrom(m => m.AwayTeam.Name));
+                .ForMember(mr => mr.AwayTeamName, opt => opt.MapFrom(m => m.AwayTeam.Name))
+                .ForMember(mr => mr.HomeTeamLogoUrl, opt => opt.MapFrom(m => m.HomeTeam.LogoUrl))
+                .ForMember(mr => mr.AwayTeamLogoUrl, opt => opt.MapFrom(m => m.AwayTeam.LogoUrl))
+                .ForMember(mr => mr.ScheduledOn, opt => opt.MapFrom(m => m.ScheduledAt.Date));
             CreateMap<MatchRecord, MatchRecordResource>()
                 .ForMember(mr => mr.ScoreTeamId, opt => opt.MapFrom(m => m.ScoreMember.TeamMembers.FirstOrDefault(tm => tm.MemberId == m.ScoreMember.Id).TeamId))
                 .ForMember(mr => mr.AssistTeamId, opt => opt.MapFrom(m => m.AssistMember.TeamMembers.FirstOrDefault(tm => tm.MemberId == m.AssistMember.Id).TeamId));
