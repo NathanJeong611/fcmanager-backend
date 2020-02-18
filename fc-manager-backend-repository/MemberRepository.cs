@@ -36,6 +36,7 @@ namespace fc_manager_backend_repository
         public async Task<IEnumerable<Member>> GetMembers()
         {
             var result = await _context.Members
+                .Where(m => m.DeletedAt == null)
                 .Include(m => m.TeamMembers)
                     .ThenInclude(t => t.Team)
                 .ToListAsync();

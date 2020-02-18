@@ -37,7 +37,7 @@ namespace fc_manager_backend_repository
         public async Task<IEnumerable<MatchRecord>> GetMatchRecords(int matchId)
         {
             return await _context.MatchRecords
-                            .Where(mr => mr.MatchId == matchId)
+                            .Where(mr => mr.MatchId == matchId && mr.DeletedAt == null)
                             .Include(mr => mr.ScoreMember)
                                 .ThenInclude(mrm => mrm.TeamMembers)
                             .Include(mr => mr.AssistMember)

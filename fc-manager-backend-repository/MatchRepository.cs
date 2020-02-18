@@ -31,13 +31,26 @@ namespace fc_manager_backend_repository
 
         public async Task<Match> GetMatch(int id)
         {
-            return await _context.Matches.FindAsync(id);
+            return await _context.Matches
+                        .Where(m => m.DeletedAt == null)
+                        .Include(m => m.HomeTeam)
+                        .Include(m => m.AwayTeam)
+                        .Include(m => m.MatchRecords)
+                            .ThenInclude(mr => mr.ScoreMember)
+                                .ThenInclude(mrm => mrm.TeamMembers)
+                        .Include(m => m.MatchRecords)
+                            .ThenInclude(mr => mr.AssistMember)
+                                .ThenInclude(mrm => mrm.TeamMembers)
+                        .Include(m => m.MatchRecords)
+                            .ThenInclude(mr => mr.Type)
+                        .FirstOrDefaultAsync(m => m.Id == id);
         }
 
         public async Task<IEnumerable<Match>> GetMatches()
         {
 
             return await _context.Matches
+                        .Where(m => m.DeletedAt == null)
                         .Include(m => m.HomeTeam)
                         .Include(m => m.AwayTeam)
                         .Include(m => m.MatchRecords)

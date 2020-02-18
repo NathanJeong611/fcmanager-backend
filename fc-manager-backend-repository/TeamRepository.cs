@@ -20,6 +20,7 @@ namespace fc_manager_backend_repository
         public async Task<IEnumerable<Team>> GetTeams()
         {
             var result = await _context.Teams
+                .Where(t => t.DeletedAt == null)
                 .ToListAsync();
             return result;
         }

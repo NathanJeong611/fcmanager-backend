@@ -31,10 +31,10 @@ namespace fc_manager_backend_api.Controllers
         }
 
          [HttpPost]
-        public async Task<IActionResult> CreateMatch([FromBody] MatchResource matchResource)
+        public async Task<MatchResource> CreateMatch([FromBody] MatchResource matchResource)
         {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
+        // if (!ModelState.IsValid)
+        //     return BadRequest(ModelState);
 
         var match = _mapper.Map<MatchResource, Match>(matchResource);
 
@@ -45,7 +45,7 @@ namespace fc_manager_backend_api.Controllers
 
         var result = _mapper.Map<Match, MatchResource>(match);
 
-        return Ok(result);
+        return result;
         }
 
         [HttpPut("{id}")]
