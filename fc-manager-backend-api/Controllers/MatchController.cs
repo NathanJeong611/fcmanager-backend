@@ -73,11 +73,15 @@ namespace fc_manager_backend_api.Controllers
         public async Task<IActionResult> DeleteMatch(int id)
         {
             var match = await _repository.GetMatch(id);
+            var matchRecords = await _repository.GetMatchRecords(id);
 
             if (match == null)
                 return NotFound();
 
             match.DeletedAt = DateTime.Now;
+
+            foreach(var matchRecord in matchRecords)
+                matchRecord.DeletedAt = DateTime.Now;
             //_repository.Remove(member);
             await _unitOfWork.CompleteAsync();
 

@@ -64,6 +64,14 @@ namespace fc_manager_backend_repository
                         .ToListAsync();
         }
 
+        public async Task<IEnumerable<MatchRecord>> GetMatchRecords(int id)
+        {
+
+            return await _context.MatchRecords
+                        .Where(m =>  m.MatchId == id && m.DeletedAt == null)
+                        .ToListAsync();
+        }
+
         // public async Task<List<QueryResult<Match>>> GetScheduledMatches()
         // {
         //     var result = new List<QueryResult<Match>>();

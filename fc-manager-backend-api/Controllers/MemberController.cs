@@ -38,33 +38,33 @@ namespace fc_manager_backend_api.Controllers
         // }
 
         [HttpPost]
-        public async Task<IActionResult> CreateMember([FromBody] MemberResource memberResource)
+        public async Task<MemberResource> CreateMember([FromBody] MemberResource memberResource)
         {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
+            // if (!ModelState.IsValid)
+            //     return BadRequest(ModelState);
 
-        var member = _mapper.Map<MemberResource, Member>(memberResource);
+            var member = _mapper.Map<MemberResource, Member>(memberResource);
 
-        _repository.Add(member);
-        await _unitOfWork.CompleteAsync();
+            _repository.Add(member);
+            await _unitOfWork.CompleteAsync();
 
-        member = await _repository.GetMember(member.Id);
+            member = await _repository.GetMember(member.Id);
 
-        var result = _mapper.Map<Member, MemberResource>(member);
+            var result = _mapper.Map<Member, MemberResource>(member);
 
-        return Ok(result);
+            return result;
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateMember(int id, [FromBody] SaveMemberResource memberResource)
+        public async Task<MemberResource> UpdateMember(int id, [FromBody] SaveMemberResource memberResource)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            // if (!ModelState.IsValid)
+            //     return BadRequest(ModelState);
 
             var member = await _repository.GetMember(id);
 
-            if (member == null)
-                return NotFound();
+            // if (member == null)
+            //     return NotFound();
 
             _mapper.Map<SaveMemberResource, Member>(memberResource, member);
 
@@ -73,7 +73,7 @@ namespace fc_manager_backend_api.Controllers
             member = await _repository.GetMember(member.Id);
             var result = _mapper.Map<Member, MemberResource>(member);
 
-            return Ok(result);
+            return result;
         }
 
         [HttpDelete("{id}")]

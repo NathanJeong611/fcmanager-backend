@@ -10,19 +10,22 @@ namespace fc_manager_backend_api.Controllers.Resources
 {
     public class SaveMemberResource : BaseResource
     {
-        public virtual Team HomeTeam { get; set; }
-        public int HomeTeamId{get; set;}
-        public int HomeScore { get; set; }
-        public virtual Team AwayTeam { get; set; }
-        public int AwayTeamId{get; set;}
-        public int AwayScore { get; set; }
-        public DateTime ScheduledAt { get; set; }
+        [Required]
         [StringLength(100)]
-        public string Location {get;set;}
-        public virtual League League {get;set;}
-        public int LeagueId {get;set;}
-        public virtual Club Club {get;set;}
-        public int ClubId {get;set;}
+        public string Name { get; set; }
+        [StringLength(255)]
+        public string Email { get; set; }
+        [StringLength(20)]
+        public string Phone { get; set; }
+        public DateTime StartedOn { get; set; }
+        public int RoleId { get; set; }
+        public virtual Code Role { get; set; }
+        public int ClubId { get; set; }
+        public virtual Club Club { get; set; }
+        public int TeamId { get; set; }
+        public string TeamName { get; set; }
+        public string ImageUrl { get; set; }
+        public DateTime? DOB { get; set; }
 
     }
 }
