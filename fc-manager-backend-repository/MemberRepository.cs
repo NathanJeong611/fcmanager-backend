@@ -30,7 +30,11 @@ namespace fc_manager_backend_repository
 
         public async Task<Member> GetMember(int id)
         {
-            return await _context.Members.FindAsync(id);
+            return await _context.Members
+                 .Where(m => m.DeletedAt == null && m.Id == id)
+                .Include(m => m.TeamMembers)
+                    .ThenInclude(t => t.Team)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Member>> GetMembers()
