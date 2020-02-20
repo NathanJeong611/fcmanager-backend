@@ -16,12 +16,12 @@ namespace fc_manager_backend_api.Controllers
     [Route("[controller]")]
     public class MemberController : ControllerBase
     {
-        private readonly ILogger<MatchController> _logger;
+        private readonly ILogger<MemberController> _logger;
         private IMemberRepository _repository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
-        public MemberController(ILogger<MatchController> logger, IMemberRepository repository, IMapper mapper, IUnitOfWork unitOfWork)
+        public MemberController(ILogger<MemberController> logger, IMemberRepository repository, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;

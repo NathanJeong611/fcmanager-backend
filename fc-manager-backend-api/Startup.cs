@@ -33,6 +33,7 @@ namespace fc_manager_backend_api
             services.AddDbContext<FCMContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
+            services.AddScoped<ILeagueRepository, LeagueRepository>();
             services.AddScoped<IMemberRepository, MemberRepository>();
             services.AddScoped<ICodeRepository, CodeRepository>();
             services.AddScoped<ITeamRepository, TeamRepository>();
