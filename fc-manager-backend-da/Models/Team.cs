@@ -15,5 +15,7 @@ namespace fc_manager_backend_da.Models
         public virtual Club Club { get; set; }
         [ForeignKey("Club")]
         public int ClubId {get;set;}
+        [ForeignKey("League")]
+        public int LeagueId {get;set;}
     }
 }

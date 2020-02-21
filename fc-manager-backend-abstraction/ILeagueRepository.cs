@@ -11,6 +11,8 @@ namespace fc_manager_backend_abstraction
         // Task<Member> GetMember(int id);
         Task<IEnumerable<Match>> GetLeagueMatches(int leagueId);
         Task<IEnumerable<Team>> GetLeagueTeams(int leagueId);
+
+        Task<List<QueryResult<MatchRecord>>> GetScoreRecords(int leagueId);
         // void Add(Member member);
         // void Remove(Member member);
     }

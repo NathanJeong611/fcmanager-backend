@@ -23,11 +23,8 @@ namespace fc_manager_backend_api.Mapping
                 .ForMember(mr => mr.Id, opt => opt.MapFrom(m => m.Id))
                 .ForMember(mr => mr.TeamName, opt => opt.MapFrom(m => m.TeamMembers.FirstOrDefault(f => f.MemberId == m.Id).Team.Name))
                 .ForMember(mr => mr.TeamId, opt => opt.MapFrom(m => m.TeamMembers.FirstOrDefault(f => f.MemberId == m.Id).Team.Id));
-
             CreateMap<Code, CodeResource>();
             CreateMap<Team, TeamResource>();
-
-            CreateMap(typeof(QueryResult<>), typeof(QueryResultResource<>));
             CreateMap<Match, MatchResource>()
                 .ForMember(mr => mr.HomeTeamName, opt => opt.MapFrom(m => m.HomeTeam.Name))
                 .ForMember(mr => mr.AwayTeamName, opt => opt.MapFrom(m => m.AwayTeam.Name))
@@ -37,6 +34,10 @@ namespace fc_manager_backend_api.Mapping
             CreateMap<MatchRecord, MatchRecordResource>()
                 .ForMember(mr => mr.ScoreTeamId, opt => opt.MapFrom(m => m.ScoreMember.TeamMembers.FirstOrDefault(tm => tm.MemberId == m.ScoreMember.Id).TeamId))
                 .ForMember(mr => mr.AssistTeamId, opt => opt.MapFrom(m => m.AssistMember.TeamMembers.FirstOrDefault(tm => tm.MemberId == m.AssistMember.Id).TeamId));
+            CreateMap(typeof(QueryResult<>), typeof(QueryResultResource<>));
+            CreateMap<QueryResult<MatchRecord>, QueryResultResource<MatchRecordScoreResource>>();
+            //     .ForMember(mr => mr, opt => opt.MapFrom(m => m.Select(s => new { })));
+                //.ForMember(mr => mr.TeamId, opt => opt.MapFrom(m => m.ScoreMember.TeamMembers.FirstOrDefault(tm => tm.MemberId == m.ScoreMember.Id).TeamId));            
                 
             // API Resource to Domain
             CreateMap<MemberResource, Member>();

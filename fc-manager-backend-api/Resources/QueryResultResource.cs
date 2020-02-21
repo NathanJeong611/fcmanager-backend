@@ -7,7 +7,8 @@ namespace fc_manager_backend_api.Controllers.Resources
 {
     public class QueryResultResource<T>
     {
-        public DateTime ScheduledOn { get; set; }
-        public IEnumerable<T> Matches { get; set; }
+        public int MemberId { get; set; }
+        //public Member Member { get; set; }
+        public int RecordCount { get; set;}
     }
 }
