@@ -30,13 +30,34 @@ namespace fc_manager_backend_api.Controllers
             _repository = repository;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<LeagueResource>> GetLeagueStandings(int id)
-        {
-            var leagueStandings = await _repository.GetLeagueStandings(id);
 
-            var result = _mapper.Map<IEnumerable<League>, IEnumerable<LeagueResource>>(leagueStandings);
-            return result;
+        [HttpGet]
+        public async Task<IEnumerable<LeagueResource>> GetLeagueStandings(int leagueId)
+        {
+            //var teams = await _repository.GetTeams(leagueId);
+            var standings = new int[][]{};
+            var matches = await _repository.GetLeagueMatches(leagueId);
+
+            foreach(var match in matches)
+            {
+                if(match.HomeScore > match.AwayScore)
+                {
+                    standings[match.HomeTeamId][0]++;
+                    standings[match.AwayTeamId][2]++;
+                    standings[match.HomeTeamId][3] += match.HomeScore;
+                    standings[match.HomeTeamId][4] += match.AwayScore;
+                    standings[match.AwayTeamId][3] += match.AwayScore;
+                    standings[match.AwayTeamId][4] += match.HomeScore;
+                }
+
+                if(match.HomeScore == match.AwayScore)
+                {
+                    standings[match.HomeTeamId][1]++;
+                    standings[match.AwayTeamId][1]++;
+                }
+            }
+            //var result = _mapper.Map<IEnumerable<League>, IEnumerable<LeagueResource>>(leagueStandings);
+            return null;
         }
     }
 }

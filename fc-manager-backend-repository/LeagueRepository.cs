@@ -17,9 +17,20 @@ namespace fc_manager_backend_repository
         {
             _context = context;
         }
-        public async Task<IEnumerable<League>> GetLeagueStandings(int id)
+
+        public async Task<IEnumerable<Team>> GetLeagueTeams(int leagueId)
         {
-            var result = await _context.League.ToListAsync();
+            var result = await _context.Teams
+                                        //.Where(t => t. == leagueId && m.DeletedAt != null)
+                                        .ToListAsync();
+            
+            return result;
+        }
+        public async Task<IEnumerable<Match>> GetLeagueMatches(int leagueId)
+        {
+            var result = await _context.Matches
+                                        .Where(m => m.LeagueId == leagueId && m.DeletedAt != null)
+                                        .ToListAsync();
             
             return result;
         }
