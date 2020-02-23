@@ -18,24 +18,19 @@ namespace fc_manager_backend_api.Controllers
     {
         private readonly ILogger<MemberController> _logger;
         private IMemberRepository _repository;
+        private ITeamMemberRepository _teamMeberRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
-        public MemberController(ILogger<MemberController> logger, IMemberRepository repository, IMapper mapper, IUnitOfWork unitOfWork)
+        public MemberController(ILogger<MemberController> logger, IMemberRepository repository, ITeamMemberRepository teamMemberRepository, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _logger = logger;
             //_repoWrapper = repoWrapper;
             _repository = repository;
+            _teamMeberRepository = teamMemberRepository;
         }
-
-        // [HttpGet("{clubId}")]
-        // public async Task<IEnumerable<Member>> GetMember(int clubId)
-        // {
-        //     var members = await _repoWrapper.Member.Include(members => members.).ToListAsync();
-        //     await 
-        // }
 
         [HttpPost]
         public async Task<MemberResource> CreateMember([FromBody] MemberResource memberResource)
@@ -67,6 +62,31 @@ namespace fc_manager_backend_api.Controllers
             //     return NotFound();
 
             _mapper.Map<SaveMemberResource, Member>(memberResource, member);
+
+            //Find LeagueTeamMember
+            var leagueTeamMembers = member.TeamMembers
+                                .Where(tm => tm.DeletedAt == null 
+                                            && tm.TeamId > 0 
+                                            && tm.Team.LeagueId == memberResource.LeagueId)
+                                .FirstOrDefault();
+
+            if(memberResource.TeamId > 0)
+            {
+                if (leagueTeamMembers == null) //Add League TeamMember
+                {
+                    var teamMember = new TeamMember { MemberId = member.Id, TeamId = memberResource.TeamId };
+                    _teamMeberRepository.Add(teamMember);
+                } else //Update League Team Member
+                {
+                    leagueTeamMembers.TeamId = memberResource.TeamId;
+                }
+            } else //Remove exist TeamMember when TeamId is none
+            {
+                if (leagueTeamMembers != null)
+                {
+                    leagueTeamMembers.DeletedAt = DateTime.Now;
+                }
+            }
 
             await _unitOfWork.CompleteAsync();
 

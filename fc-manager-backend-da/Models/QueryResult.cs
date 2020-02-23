@@ -9,7 +9,11 @@ namespace fc_manager_backend_da.Models
     public class QueryResult<T>
     {
         public int MemberId { get; set; }
-        public Member Member { get; set; }
-        public int RecordCount { get; set;}
+        public string MemberName { get; set; }
+        public int TeamId { get; set; }
+        public string TeamName { get; set; }
+        public string TeamLogoUrl { get; set; }
+        public int Count { get; set; }
+        public string Type { get; set; }
     }
 }

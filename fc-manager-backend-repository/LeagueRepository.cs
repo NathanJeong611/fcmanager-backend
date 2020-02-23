@@ -35,41 +35,63 @@ namespace fc_manager_backend_repository
             
             return result;
         }
-        public async Task<IEnumerable<MatchRecord>> GetLeagueMatchRecords(int leagueId)
-        {
-            var result = await _context.MatchRecords
-                                        .Where(m => m.Match.LeagueId == leagueId && m.DeletedAt == null)
-                                        .Include(mr => mr.ScoreMember)
-                                            .ThenInclude(mrm => mrm.TeamMembers)
-                                        .Include(mr => mr.AssistMember)
-                                            .ThenInclude(mrm => mrm.TeamMembers)
-                                        .Include(mr => mr.Type)
-                                        .ToListAsync();
-            return result;
-        }
+        // public async Task<IEnumerable<MatchRecord>> GetLeagueMatchRecords(int leagueId)
+        // {
+        //     var result = await _context.MatchRecords
+        //                                 .Where(m => m.Match.LeagueId == leagueId && m.DeletedAt == null)
+        //                                 .Include(mr => mr.ScoreMember)
+        //                                     .ThenInclude(mrm => mrm.TeamMembers)
+        //                                 .Include(mr => mr.AssistMember)
+        //                                     .ThenInclude(mrm => mrm.TeamMembers)
+        //                                 .Include(mr => mr.Type)
+        //                                 .ToListAsync();
+        //     return result;
+        // }
 
-        public async Task<List<QueryResult<MatchRecord>>> GetScoreRecords(int leagueId)
+        public async Task<List<QueryResult<MatchRecord>>> GetLeagueMatchRecords(int leagueId)
         {
             var result = new List<QueryResult<MatchRecord>>();
 
-            var query = (_context.MatchRecords
+            var matchRecords = _context.MatchRecords
                                 .Where(m => m.Match.LeagueId == leagueId && m.DeletedAt == null)
                                 .Include(mr => mr.ScoreMember)
                                     .ThenInclude(mrm => mrm.TeamMembers)
+                                        .ThenInclude(tm => tm.Team)
                                 .Include(mr => mr.AssistMember)
                                     .ThenInclude(mrm => mrm.TeamMembers)
+                                        .ThenInclude(tm => tm.Team)
                                 .Include(mr => mr.Type)
-                                .AsEnumerable()
-                                .GroupBy(m => (m.ScoreMemberId, m.ScoreMember ))
+                                .AsEnumerable();
+
+            var scoreReocrds = (matchRecords
+                                .GroupBy(m => (m.ScoreMemberId, m.ScoreMember))
                                 .Select(g => new QueryResult<MatchRecord>
                                 {
+                                    Type = "score",
                                     MemberId = g.Key.ScoreMemberId ?? 0,
-                                    Member = g.Key.ScoreMember,
-                                    RecordCount = g.Count()
-                                })).ToList();
+                                    MemberName = g.Key.ScoreMember.Name,
+                                    TeamId = g.Key.ScoreMember.TeamMembers.FirstOrDefault(tm => tm.Team.LeagueId == leagueId).TeamId,
+                                    TeamName = g.Key.ScoreMember.TeamMembers.FirstOrDefault(tm => tm.Team.LeagueId == leagueId).Team.Name,
+                                    TeamLogoUrl = g.Key.ScoreMember.TeamMembers.FirstOrDefault(tm => tm.Team.LeagueId == leagueId).Team.LogoUrl,
+                                    Count = g.Count()
+                                }));
 
+            var assistRecords = (matchRecords
+                                .GroupBy(m => (m.AssistMemberId, m.AssistMember))
+                                .Select(g => new QueryResult<MatchRecord>
+                                {
+                                    Type = "assist",
+                                    MemberId = g.Key.AssistMemberId ?? 0,
+                                    MemberName = g.Key.AssistMember.Name,
+                                    TeamId = g.Key.AssistMember.TeamMembers.FirstOrDefault(tm => tm.Team.LeagueId == leagueId).TeamId,
+                                    TeamName = g.Key.AssistMember.TeamMembers.FirstOrDefault(tm => tm.Team.LeagueId == leagueId).Team.Name,
+                                    TeamLogoUrl = g.Key.AssistMember.TeamMembers.FirstOrDefault(tm => tm.Team.LeagueId == leagueId).Team.LogoUrl,
+                                    Count = g.Count()
+                                }));
+            
+            var leagueMatchRecords = scoreReocrds.Concat(assistRecords).ToList();
 
-            result = await Task.FromResult(query);
+            result = await Task.FromResult(leagueMatchRecords);
             return result;
         }
     }

@@ -71,6 +71,7 @@ namespace fc_manager_backend_api.Controllers
             var result = teams.Select(t => new LeagueStandingResource {
                 TeamId = t.Id,
                 TeamName = t.Name,
+                TeamLogoUrl = t.LogoUrl,
                 Played = standings[t.Id, 0] + standings[t.Id, 1] + standings[t.Id, 2],
                 Won = standings[t.Id, 0],
                 Drawn  = standings[t.Id, 1],
@@ -79,23 +80,20 @@ namespace fc_manager_backend_api.Controllers
                 GoalAgainst = standings[t.Id,4],
                 GoalDifference = standings[t.Id,3] - standings[t.Id,4],
                 Points = standings[t.Id, 0] * 3 + standings[t.Id, 1],
-            }).ToList();
+            }).OrderByDescending(ob => ob.Points).ThenByDescending(tb => tb.GoalDifference).ThenByDescending(tb => tb.GoalFor).ToList();
             
             return result;
         }
 
-        [HttpGet("{leagueId}/scores")]
-        public async Task<List<QueryResult<MatchRecordScoreResource>>> GetLeagueMatchRecords(int leagueId)
+        [HttpGet("{leagueId}/matchrecords")]
+        public async Task<List<QueryResultResource<MatchRecordScoreResource>>> GetLeagueMatchRecords(int leagueId)
         {
             //var matchRecords = await _repository.GetLeagueMatchRecords(leagueId);
 
-            var scoreRecords = await _repository.GetScoreRecords(leagueId);
+            var scoreRecords = await _repository.GetLeagueMatchRecords(leagueId);
 
-            foreach(var t in scoreRecords)
-            {
-                var test = _mapper.Map<QueryResult<MatchRecord>,QueryResult<MatchRecordScoreResource>>(t);
-            }
-            var result = _mapper.Map<List<QueryResult<MatchRecord>>, List<QueryResult<MatchRecordScoreResource>>>(scoreRecords);
+
+            var result = _mapper.Map<List<QueryResult<MatchRecord>>, List<QueryResultResource<MatchRecordScoreResource>>>(scoreRecords);
 
             return result;
         }

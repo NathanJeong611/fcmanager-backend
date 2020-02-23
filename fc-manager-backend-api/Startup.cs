@@ -35,6 +35,7 @@ namespace fc_manager_backend_api
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
             services.AddScoped<ILeagueRepository, LeagueRepository>();
             services.AddScoped<IMemberRepository, MemberRepository>();
+            services.AddScoped<ITeamMemberRepository, TeamMemberRepository>();
             services.AddScoped<ICodeRepository, CodeRepository>();
             services.AddScoped<ITeamRepository, TeamRepository>();
             services.AddScoped<IMatchRepository, MatchRepository>();

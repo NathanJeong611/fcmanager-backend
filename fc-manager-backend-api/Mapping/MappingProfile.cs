@@ -35,7 +35,8 @@ namespace fc_manager_backend_api.Mapping
                 .ForMember(mr => mr.ScoreTeamId, opt => opt.MapFrom(m => m.ScoreMember.TeamMembers.FirstOrDefault(tm => tm.MemberId == m.ScoreMember.Id).TeamId))
                 .ForMember(mr => mr.AssistTeamId, opt => opt.MapFrom(m => m.AssistMember.TeamMembers.FirstOrDefault(tm => tm.MemberId == m.AssistMember.Id).TeamId));
             CreateMap(typeof(QueryResult<>), typeof(QueryResultResource<>));
-            CreateMap<QueryResult<MatchRecord>, QueryResultResource<MatchRecordScoreResource>>();
+            CreateMap<MatchRecord, MatchRecordScoreResource>();
+                //.ForMember(mrr => mrr.Id, opt => opt.MapFrom(m => m.ScoreMemberId));
             //     .ForMember(mr => mr, opt => opt.MapFrom(m => m.Select(s => new { })));
                 //.ForMember(mr => mr.TeamId, opt => opt.MapFrom(m => m.ScoreMember.TeamMembers.FirstOrDefault(tm => tm.MemberId == m.ScoreMember.Id).TeamId));            
                 

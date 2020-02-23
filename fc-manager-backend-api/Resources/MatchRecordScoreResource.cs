@@ -7,15 +7,17 @@ using System.Collections.Generic;
 
 namespace fc_manager_backend_api.Controllers.Resources
 {
-    // public class List<MatchResource>
-    // {
-    //     public MatchResource match {get;set;}
-    // }
+
     public class MatchRecordScoreResource
     {
-        public int MemberId { get; set; }
-        public Member Member { get; set; }
-        public int RecordCount { get; set;}
+        public int? ScoreMemberId { get; set; }
+        public virtual Member ScoreMember { get; set; }
+        public int? AssistMemberId { get; set; }
+        public virtual Member AssistMember { get; set; }
+        public int CodeId { get; set; }
+        public virtual Code Type { get; set; }
+        public int MatchId { get; set; }
+        public virtual Match Match { get; set; }
         
     }
 }
