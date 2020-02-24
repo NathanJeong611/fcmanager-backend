@@ -41,6 +41,16 @@ namespace fc_manager_backend_api.Controllers
             var member = _mapper.Map<MemberResource, Member>(memberResource);
 
             _repository.Add(member);
+
+            await _unitOfWork.CompleteAsync();
+            
+            //Add TeamMember
+            if(memberResource.TeamId > 0)
+            {
+                var teamMember = new TeamMember { MemberId = member.Id, TeamId = memberResource.TeamId };
+                _teamMeberRepository.Add(teamMember);
+            }
+
             await _unitOfWork.CompleteAsync();
 
             member = await _repository.GetMember(member.Id);

@@ -25,5 +25,6 @@ namespace fc_manager_backend_api.Controllers.Resources
         public string TeamName { get; set; }
         public string ImageUrl { get; set; }
         public DateTime? DOB { get; set; }
+        public int LeagueId { get; set; }
     }
 }
