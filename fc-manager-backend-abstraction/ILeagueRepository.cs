@@ -8,7 +8,7 @@ namespace fc_manager_backend_abstraction
 {
     public interface ILeagueRepository
     {
-        // Task<Member> GetMember(int id);
+        Task<IEnumerable<League>> GetLeagues(int clubId);
         Task<IEnumerable<Match>> GetLeagueMatches(int leagueId);
         Task<IEnumerable<Team>> GetLeagueTeams(int leagueId);
 

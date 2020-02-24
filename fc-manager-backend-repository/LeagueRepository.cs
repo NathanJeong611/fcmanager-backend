@@ -19,34 +19,25 @@ namespace fc_manager_backend_repository
             _context = context;
         }
 
+        public async Task<IEnumerable<League>> GetLeagues(int clubId)
+        {
+            return await _context.League
+                                .Where(t => t.ClubId == clubId && t.DeletedAt == null)
+                                .ToListAsync();
+        }
+
         public async Task<IEnumerable<Team>> GetLeagueTeams(int leagueId)
         {
-            var result = await _context.Teams
-                                        .Where(t => t.LeagueId == leagueId && t.DeletedAt == null)
-                                        .ToListAsync();
-            
-            return result;
+            return await _context.Teams
+                                .Where(t => t.LeagueId == leagueId && t.DeletedAt == null)
+                                .ToListAsync();
         }
         public async Task<IEnumerable<Match>> GetLeagueMatches(int leagueId)
         {
-            var result = await _context.Matches
-                                        .Where(m => m.LeagueId == leagueId && m.DeletedAt == null)
-                                        .ToListAsync();
-            
-            return result;
+            return await _context.Matches
+                                .Where(m => m.LeagueId == leagueId && m.DeletedAt == null)
+                                .ToListAsync();
         }
-        // public async Task<IEnumerable<MatchRecord>> GetLeagueMatchRecords(int leagueId)
-        // {
-        //     var result = await _context.MatchRecords
-        //                                 .Where(m => m.Match.LeagueId == leagueId && m.DeletedAt == null)
-        //                                 .Include(mr => mr.ScoreMember)
-        //                                     .ThenInclude(mrm => mrm.TeamMembers)
-        //                                 .Include(mr => mr.AssistMember)
-        //                                     .ThenInclude(mrm => mrm.TeamMembers)
-        //                                 .Include(mr => mr.Type)
-        //                                 .ToListAsync();
-        //     return result;
-        // }
 
         public async Task<List<QueryResult<MatchRecord>>> GetLeagueMatchRecords(int leagueId)
         {

@@ -30,6 +30,15 @@ namespace fc_manager_backend_api.Controllers
             _repository = repository;
         }
 
+        [HttpGet("{clubId}")]
+        public async Task<IEnumerable<LeagueResource>> GetLeagues(int clubId)
+        {
+            var leagues = await _repository.GetLeagues(clubId);
+
+            var result = _mapper.Map<IEnumerable<League>, IEnumerable<LeagueResource>>(leagues);
+            return result;
+        }
+
 
         [HttpGet("{leagueId}/standings")]
         public async Task<IEnumerable<LeagueStandingResource>> GetLeagueStandings(int leagueId)

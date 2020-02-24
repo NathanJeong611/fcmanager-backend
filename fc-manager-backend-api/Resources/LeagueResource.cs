@@ -11,7 +11,6 @@ namespace fc_manager_backend_api.Controllers.Resources
     {
         public string Name {get;set;}
         [StringLength(200)]
-        public virtual Club Club {get;set;}
         public int ClubId {get;set;}
         public DateTime StartedOn {get;set;}
         public DateTime? EndedOn {get;set;}

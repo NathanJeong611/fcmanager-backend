@@ -14,15 +14,11 @@ namespace fc_manager_backend_api.Mapping
         public MappingProfile()
         {
             // Domain to API Resource
-            //CreateMap(typeof(IEnumerable<Member>), typeof(IEnumerable<MemberResource>));
-            //     .ForMember(mr => mr, opt => opt.MapFrom(m => m.Select(s => new { Id = s.Id})));
-            //     .ForMember(mr => mr.Id, opt => opt.MapFrom(m => m.))
-            // CreateMap<IEnumerable<Member>, IEnumerable<MemberResource>>()
-            //     .ForMember(mr => mr, opt => opt.MapFrom(m => m.Select(s => new { Id = s.Id})));
             CreateMap<Member, MemberResource>()
                 .ForMember(mr => mr.Id, opt => opt.MapFrom(m => m.Id))
                 .ForMember(mr => mr.TeamName, opt => opt.MapFrom(m => m.TeamMembers.FirstOrDefault(f => f.MemberId == m.Id).Team.Name))
                 .ForMember(mr => mr.TeamId, opt => opt.MapFrom(m => m.TeamMembers.FirstOrDefault(f => f.MemberId == m.Id).Team.Id));
+            CreateMap<League, LeagueResource>();
             CreateMap<Code, CodeResource>();
             CreateMap<Team, TeamResource>();
             CreateMap<Match, MatchResource>()
