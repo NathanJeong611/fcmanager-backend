@@ -16,7 +16,7 @@ namespace fc_manager_backend_da.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
-                .HasAnnotation("ProductVersion", "3.1.0")
+                .HasAnnotation("ProductVersion", "3.1.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             modelBuilder.Entity("fc_manager_backend_da.Models.Club", b =>
@@ -46,7 +46,7 @@ namespace fc_manager_backend_da.Migrations
                         .HasColumnType("character varying(100)")
                         .HasMaxLength(100);
 
-                    b.Property<DateTime>("StarteOn")
+                    b.Property<DateTime>("StartedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
@@ -172,6 +172,9 @@ namespace fc_manager_backend_da.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<int?>("AssistMemberId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("CodeId")
                         .HasColumnType("integer");
 
@@ -184,16 +187,18 @@ namespace fc_manager_backend_da.Migrations
                     b.Property<int>("MatchId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("MemberId")
+                    b.Property<int?>("ScoreMemberId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AssistMemberId");
 
                     b.HasIndex("CodeId");
 
                     b.HasIndex("MatchId");
 
-                    b.HasIndex("MemberId");
+                    b.HasIndex("ScoreMemberId");
 
                     b.ToTable("MatchRecords");
                 });
@@ -265,6 +270,9 @@ namespace fc_manager_backend_da.Migrations
                     b.Property<string>("History")
                         .HasColumnType("text");
 
+                    b.Property<int>("LeagueId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("LogoUrl")
                         .HasColumnType("text");
 
@@ -301,7 +309,7 @@ namespace fc_manager_backend_da.Migrations
                     b.Property<int>("MemberId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("TeamId")
+                    b.Property<int>("TeamId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -358,6 +366,10 @@ namespace fc_manager_backend_da.Migrations
 
             modelBuilder.Entity("fc_manager_backend_da.Models.MatchRecord", b =>
                 {
+                    b.HasOne("fc_manager_backend_da.Models.Member", "AssistMember")
+                        .WithMany()
+                        .HasForeignKey("AssistMemberId");
+
                     b.HasOne("fc_manager_backend_da.Models.Code", "Type")
                         .WithMany()
                         .HasForeignKey("CodeId")
@@ -365,16 +377,14 @@ namespace fc_manager_backend_da.Migrations
                         .IsRequired();
 
                     b.HasOne("fc_manager_backend_da.Models.Match", "Match")
-                        .WithMany()
+                        .WithMany("MatchRecords")
                         .HasForeignKey("MatchId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("fc_manager_backend_da.Models.Member", "Member")
+                    b.HasOne("fc_manager_backend_da.Models.Member", "ScoreMember")
                         .WithMany()
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ScoreMemberId");
                 });
 
             modelBuilder.Entity("fc_manager_backend_da.Models.Member", b =>
@@ -398,14 +408,16 @@ namespace fc_manager_backend_da.Migrations
             modelBuilder.Entity("fc_manager_backend_da.Models.TeamMember", b =>
                 {
                     b.HasOne("fc_manager_backend_da.Models.Member", "Member")
-                        .WithMany()
+                        .WithMany("TeamMembers")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("fc_manager_backend_da.Models.Team", "Team")
                         .WithMany()
-                        .HasForeignKey("TeamId");
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

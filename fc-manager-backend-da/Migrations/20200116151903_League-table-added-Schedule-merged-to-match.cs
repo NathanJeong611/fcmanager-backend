@@ -218,7 +218,7 @@ namespace fc_manager_backend_da.Migrations
                 nullable: true);
 
             migrationBuilder.AddColumn<DateTime>(
-                name: "StarteOn",
+                name: "StartedOn",
                 table: "Clubs",
                 nullable: false,
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
@@ -385,7 +385,7 @@ namespace fc_manager_backend_da.Migrations
                 table: "Clubs");
 
             migrationBuilder.DropColumn(
-                name: "StarteOn",
+                name: "StartedOn",
                 table: "Clubs");
 
             migrationBuilder.AddColumn<DateTime>(
