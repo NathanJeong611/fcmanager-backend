@@ -9,6 +9,7 @@ namespace fc_manager_backend_abstraction
     public interface ICodeRepository
     {
         Task<IEnumerable<Code>> GetCodes();
+        Task<IEnumerable<Code>> GetCodes(int parentId);
     }
 
 

@@ -19,9 +19,16 @@ namespace fc_manager_backend_repository
         }
         public async Task<IEnumerable<Code>> GetCodes()
         {
-            var result = await _context.Codes
+            return await _context.Codes
                 .ToListAsync();
-            return result;
+        }
+
+        public async Task<IEnumerable<Code>> GetCodes(int parentId)
+        {
+            return await _context.Codes
+                                .Where(c => c.DeletedAt == null && c.ParentCodeId == parentId)
+                                .Include(c => c.ParentCode)
+                                .ToListAsync();
         }
     }
 }

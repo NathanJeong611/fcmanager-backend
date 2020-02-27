@@ -6,6 +6,8 @@ namespace fc_manager_backend_da.Models
 {
     public class Code : BaseEntity
     {
+        [ForeignKey("Code")]
+        public int? ParentCodeId {get;set;}
         public virtual Code ParentCode {get;set;}
         [Required]
         [StringLength(50)]
