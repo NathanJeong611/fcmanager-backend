@@ -30,13 +30,12 @@ namespace fc_manager_backend_api.Controllers
             _repository = repository;
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<CodeResource>> GetCodeResources()
+        [HttpGet("{parentId}")]
+        public async Task<IEnumerable<CodeResource>> GetCodes(int parentId)
         {
-            var codes = await _repository.GetCodes();
+            var codes = await _repository.GetCodes(parentId);
 
-            var result = _mapper.Map<IEnumerable<Code>, IEnumerable<CodeResource>>(codes);
-            return result;
+            return _mapper.Map<IEnumerable<Code>, IEnumerable<CodeResource>>(codes);
         }
     }
 }
