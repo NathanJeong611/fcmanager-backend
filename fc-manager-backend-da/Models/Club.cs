@@ -13,6 +13,6 @@ namespace fc_manager_backend_da.Models
         public string LogoUrl { get; set; }
         public string Description { get; set; }
         public string History { get; set; }
-        public DateTime StarteOn { get; set; }
+        public DateTime StartedOn { get; set; }
     }
 }

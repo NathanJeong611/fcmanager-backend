@@ -48,7 +48,7 @@ namespace fc_manager_backend_da.Migrations
                         .HasColumnType("character varying(100)")
                         .HasMaxLength(100);
 
-                    b.Property<DateTime>("StarteOn")
+                    b.Property<DateTime>("StartedOn")
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");

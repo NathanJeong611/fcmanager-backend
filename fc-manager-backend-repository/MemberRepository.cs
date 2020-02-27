@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace fc_manager_backend_repository
 {
-    public class MemberRepository : IMember
+    public class MemberRepository : IMemberRepository
     {
         private FCMContext _context;
         public MemberRepository(FCMContext context)
@@ -18,20 +18,33 @@ namespace fc_manager_backend_repository
             _context = context;
         }
 
-        public  IEnumerable<MemberInfo> GetClubMembers(int clubId)
+        public void Add(Member member)
         {
-            return _context.Members.Where(m=>m.ClubId == clubId && m.DeletedAt == null)
-            .Select(m=> new MemberInfo{ Id = m.Id,   }).ToList();
+            _context.Members.Add(member);
         }
 
-        public IEnumerable<MemberInfo> GetLeagueMembers(int leagueId)
+        public void Remove(Member member)
         {
-            throw new NotImplementedException();
+            _context.Members.Remove(member);
         }
 
-        public IEnumerable<MemberInfo> GetTeamMembers(int teamId)
+        public async Task<Member> GetMember(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Members
+                 .Where(m => m.DeletedAt == null && m.Id == id)
+                .Include(m => m.TeamMembers)
+                    .ThenInclude(t => t.Team)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<Member>> GetMembers()
+        {
+            var result = await _context.Members
+                .Where(m => m.DeletedAt == null)
+                .Include(m => m.TeamMembers)
+                    .ThenInclude(t => t.Team)
+                .ToListAsync();
+            return result;
         }
     }
 }
