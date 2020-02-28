@@ -33,12 +33,12 @@ namespace fc_manager_backend_api.Controllers
         }
 
         [HttpPost]
-        public async Task<MemberResource> CreateMember([FromBody] MemberResource memberResource)
+        public async Task<MemberResource> CreateMember([FromBody] SaveMemberResource memberResource)
         {
             // if (!ModelState.IsValid)
             //     return BadRequest(ModelState);
 
-            var member = _mapper.Map<MemberResource, Member>(memberResource);
+            var member = _mapper.Map<SaveMemberResource, Member>(memberResource);
 
             _repository.Add(member);
 
@@ -115,6 +115,14 @@ namespace fc_manager_backend_api.Controllers
                 return NotFound();
 
             member.DeletedAt = DateTime.Now;
+
+            var teamMembers = member.TeamMembers
+                                .Where(tm => tm.DeletedAt == null
+                                        && tm.MemberId == id);
+
+            foreach (var tm in teamMembers)
+                tm.DeletedAt = DateTime.Now;
+
             //_repository.Remove(member);
             await _unitOfWork.CompleteAsync();
 
