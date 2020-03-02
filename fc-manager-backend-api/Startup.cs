@@ -51,9 +51,13 @@ namespace fc_manager_backend_api
             options.AddPolicy(CORSOriginName,
             builder =>
             {
-                builder.WithOrigins("http://localhost:3000")
+                builder.WithOrigins("http://localhost:3000",
+                                    "https://fcmanager-frontend.herokuapp.com/",
+                                    "http://fcmanager-frontend.herokuapp.com/"
+                )
                         .AllowAnyHeader()
                         .AllowAnyMethod();
+                        //https://fcmanager-frontend.herokuapp.com/
             });
         });
 
