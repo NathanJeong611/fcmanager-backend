@@ -5,6 +5,8 @@ FCManager is a league management software that helps players manage their organi
 FCManager Back-end provides optimized database architecture and successful data transfer to the front-end application
 
 ### Features
+* https://api.fcmanagers.club
+* PostgreSQL
 * Member API
 * Match API
 * Team API
